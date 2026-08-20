@@ -1,0 +1,310 @@
+/* Light mode overrides for Axion Dashboard */
+
+/* Base overrides */
+.light-mode {
+  --color-bg: #f8fafc;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+/* Sidebar */
+.light-mode .sidebar {
+  background: #ffffff;
+  border-right: 1px solid rgba(0,0,0,0.1);
+}
+.light-mode .axion-logo-img {
+  filter: none;
+  mix-blend-mode: multiply;
+}
+.light-mode .sidebar-logo text {
+  fill: #0f172a;
+}
+.light-mode .tagline {
+  color: #64748b;
+}
+.light-mode .nav-item {
+  color: #475569;
+}
+.light-mode .nav-item:hover {
+  background: rgba(0,0,0,0.03);
+  color: #0f172a;
+}
+.light-mode .nav-item.active {
+  background: rgba(0,112,243,0.1);
+  color: #0070f3;
+}
+.light-mode .section-label {
+  color: #94a3b8;
+}
+.light-mode .search-tab {
+  background: rgba(0,0,0,0.03);
+  color: #64748b;
+  border-color: rgba(0,0,0,0.1);
+}
+.light-mode .search-tab.active {
+  background: #ffffff;
+  color: #0070f3;
+  border-color: rgba(0,112,243,0.3);
+}
+.light-mode .search-input-wrap input {
+  background: rgba(0,0,0,0.04);
+  border-color: rgba(0,0,0,0.1);
+  color: #0f172a;
+}
+.light-mode .search-input-wrap input::placeholder {
+  color: #64748b;
+}
+.light-mode .search-btn {
+  background: #0070f3;
+  color: #fff;
+}
+.light-mode .search-btn:hover {
+  background: #0058c4;
+}
+
+/* Header */
+.light-mode .app-header {
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  background: #ffffff;
+}
+.light-mode .header-title-block h1 {
+  color: #0f172a;
+}
+.light-mode .header-date {
+  color: #64748b;
+}
+.light-mode .icon-btn, 
+.light-mode .back-btn {
+  border: 1px solid rgba(0,0,0,0.1);
+  color: #475569;
+}
+.light-mode .icon-btn:hover, 
+.light-mode .back-btn:hover {
+  background: rgba(0,0,0,0.05);
+}
+.light-mode .notif-badge {
+  border-color: #ffffff;
+}
+.light-mode .user-chip {
+  border: 1px solid rgba(0,0,0,0.1);
+}
+.light-mode .user-chip:hover {
+  background: rgba(0,0,0,0.02);
+}
+.light-mode .user-name {
+  color: #0f172a;
+}
+.light-mode .user-role {
+  color: #64748b;
+}
+.light-mode .stat-chip {
+  background: rgba(0,0,0,0.04);
+  border-color: rgba(0,0,0,0.1);
+  color: #475569;
+}
+
+/* Map legend & overlay */
+.light-mode .map-legend {
+  background: rgba(255,255,255,0.9);
+  border-color: rgba(0,0,0,0.1);
+}
+.light-mode .legend-title {
+  color: #64748b;
+}
+.light-mode .legend-item {
+  color: #0f172a;
+}
+.light-mode .map-live-badge {
+  background: rgba(255,255,255,0.9);
+  border-color: rgba(0,0,0,0.1);
+  color: #0f172a;
+}
+
+/* Fleet Data */
+.light-mode .fleet-data-page {
+  background: #f8fafc;
+}
+.light-mode .fd-title {
+  color: #0f172a;
+}
+.light-mode .fd-subtitle {
+  color: #64748b;
+}
+.light-mode .fd-total {
+  background: rgba(0,0,0,0.04);
+  color: #475569;
+  border-color: rgba(0,0,0,0.1);
+}
+.light-mode .fd-chip.grey {
+  background: rgba(0,0,0,0.03);
+  color: #475569;
+  border-color: rgba(0,0,0,0.1);
+}
+.light-mode .fd-filter-btn {
+  color: #64748b;
+  border-color: rgba(0,0,0,0.1);
+}
+.light-mode .fd-filter-btn:hover {
+  background: rgba(0,0,0,0.04);
+  color: #0f172a;
+}
+.light-mode .fd-filter-count {
+  background: rgba(0,0,0,0.08);
+  color: #0f172a;
+}
+.light-mode .fd-search {
+  background: rgba(0,0,0,0.03);
+  border-color: rgba(0,0,0,0.1);
+  color: #0f172a;
+}
+.light-mode .fd-search::placeholder {
+  color: #94a3b8;
+}
+.light-mode .fd-car-card {
+  background: #ffffff;
+  border-color: rgba(0,0,0,0.1);
+}
+.light-mode .fd-car-card:hover {
+  border-color: rgba(0,0,0,0.2);
+  background: rgba(0,0,0,0.01);
+}
+.light-mode .fd-car-card.expanded {
+  background: rgba(0,112,243,0.04);
+}
+.light-mode .fd-car-id {
+  color: #0f172a;
+}
+.light-mode .fd-car-model {
+  color: #64748b;
+}
+.light-mode .fd-car-location {
+  color: #475569;
+}
+.light-mode .fd-zone-tag {
+  background: rgba(0,0,0,0.05);
+  border-color: rgba(0,0,0,0.1);
+  color: #475569;
+}
+.light-mode .fd-battery-track {
+  background: rgba(0,0,0,0.1);
+}
+.light-mode .fd-car-details {
+  border-top-color: rgba(0,0,0,0.1);
+}
+.light-mode .fd-detail-item {
+  background: rgba(0,0,0,0.03);
+}
+.light-mode .fd-dl {
+  color: #0f172a;
+}
+.light-mode .fd-dt {
+  color: #64748b;
+}
+.light-mode .fd-footer-row {
+  color: #94a3b8;
+}
+
+/* Detail Pages (CarDetails & SectionDetails) */
+.light-mode .car-details-page, 
+.light-mode .section-details-page {
+  background: #f8fafc;
+}
+.light-mode .cdp-id, 
+.light-mode .sdp-id {
+  color: #0f172a;
+}
+.light-mode .cdp-model, 
+.light-mode .sdp-name {
+  color: #64748b;
+}
+.light-mode .cdp-meta, 
+.light-mode .sdp-meta {
+  color: #64748b;
+}
+.light-mode .cdp-card, 
+.light-mode .sdp-card {
+  background: #ffffff;
+  border-color: rgba(0,0,0,0.1);
+}
+.light-mode .cdp-card-title, 
+.light-mode .sdp-card-title {
+  color: #64748b;
+}
+.light-mode .cdp-val, 
+.light-mode .sdp-big-value {
+  color: #0f172a;
+}
+.light-mode .cdp-val.orange, .light-mode .sdp-big-value.orange { color: #f97316; }
+.light-mode .cdp-val.blue,   .light-mode .sdp-big-value.blue   { color: #3b82f6; }
+
+.light-mode .cdp-label, 
+.light-mode .sdp-sparkline-label {
+  color: #64748b;
+}
+.light-mode .cdp-loc-box {
+  background: rgba(0,0,0,0.03);
+  border-color: rgba(0,0,0,0.1);
+}
+.light-mode .cdp-loc-val {
+  color: #0f172a;
+}
+.light-mode .cdp-loc-label {
+  color: #64748b;
+}
+.light-mode .cdp-ring-bg {
+  stroke: rgba(0,0,0,0.1);
+}
+.light-mode .cdp-canvas, 
+.light-mode .sdp-canvas {
+  border-color: rgba(0,0,0,0.1);
+  background: #ffffff;
+}
+
+/* Anomaly / Section Specific */
+.light-mode .sdp-anomaly-list .warn {
+  background: rgba(245,158,11,0.05);
+  border-color: rgba(245,158,11,0.2);
+}
+.light-mode .sdp-anomaly-list .crit {
+  background: rgba(239,68,68,0.05);
+  border-color: rgba(239,68,68,0.2);
+}
+.light-mode .sdp-anomaly-title {
+  color: #0f172a;
+}
+.light-mode .sdp-anomaly-desc {
+  color: #475569;
+}
+.light-mode .sdp-clear {
+  background: rgba(16,185,129,0.05);
+  border-color: rgba(16,185,129,0.2);
+}
+.light-mode .sdp-clear p {
+  color: #0f172a;
+}
+.light-mode .sdp-clear span {
+  color: #475569;
+}
+.light-mode .sdp-profile-box {
+  background: rgba(0,0,0,0.03);
+}
+.light-mode .sdp-profile-label {
+  color: #64748b;
+}
+.light-mode .sdp-profile-text {
+  color: #0f172a;
+}
+.light-mode .sdp-img-thumb {
+  border-color: rgba(0,0,0,0.1);
+}
+.light-mode .sdp-img-label {
+  color: #ffffff;
+}
+.light-mode .sdp-img-count {
+  background: rgba(0,0,0,0.05);
+  border-color: rgba(0,0,0,0.1);
+  color: #475569;
+}
+.light-mode .sdp-cad-hint {
+  color: #94a3b8;
+}
