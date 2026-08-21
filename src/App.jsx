@@ -5,9 +5,10 @@ import TrackMap from './components/TrackMap';
 import CarDetails from './components/CarDetails';
 import SectionDetails from './components/SectionDetails';
 import FleetData from './components/FleetData';
+import Reports from './components/Reports';
 import './App.css';
 
-// view: 'map' | 'fleet' | 'car' | 'section'
+// view: 'map' | 'fleet' | 'car' | 'section' | 'reports'
 function App() {
   const [view, setView] = useState({ screen: 'map', id: null });
   const [isLight, setIsLight] = useState(false);
@@ -36,6 +37,7 @@ function App() {
         <div className="content-area">
           {view.screen === 'map'     && <TrackMap isLight={isLight} />}
           {view.screen === 'fleet'   && <FleetData />}
+          {view.screen === 'reports' && <Reports />}
           {view.screen === 'car'     && <CarDetails carId={view.id} onBack={handleBack} />}
           {view.screen === 'section' && <SectionDetails sectionId={view.id} onBack={handleBack} />}
         </div>

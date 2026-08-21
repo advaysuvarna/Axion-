@@ -236,6 +236,7 @@
 }
 .light-mode .cdp-val.orange, .light-mode .sdp-big-value.orange { color: #f97316; }
 .light-mode .cdp-val.blue,   .light-mode .sdp-big-value.blue   { color: #3b82f6; }
+.light-mode .cdp-val.purple, .light-mode .sdp-big-value.purple { color: #8b5cf6; }
 
 .light-mode .cdp-label, 
 .light-mode .sdp-sparkline-label {

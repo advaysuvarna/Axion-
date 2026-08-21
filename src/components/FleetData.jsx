@@ -95,6 +95,9 @@ const BatteryBar = ({ pct }) => {
 const CarRow = ({ car }) => {
   const [expanded, setExpanded] = useState(false);
   const s = statusStyle[car.status];
+  
+  // Calculate high-voltage pack reading dynamically based on battery percentage (0% = 225V, 100% = 378V)
+  const calculatedVoltage = Math.round(225 + (car.battery / 100) * (378 - 225)) + 'V';
 
   return (
     <div className={`fd-car-card ${expanded ? 'expanded' : ''}`}>
@@ -125,7 +128,7 @@ const CarRow = ({ car }) => {
           <div className="fd-detail-grid">
             <div className="fd-detail-item">
               <Zap size={12} style={{ color: '#f59e0b' }} />
-              <div><p className="fd-dl">{car.voltage}</p><p className="fd-dt">Voltage</p></div>
+              <div><p className="fd-dl">{calculatedVoltage}</p><p className="fd-dt">Voltage</p></div>
             </div>
             <div className="fd-detail-item">
               <Thermometer size={12} style={{ color: '#ef4444' }} />

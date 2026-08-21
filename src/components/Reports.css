@@ -1,0 +1,337 @@
+:root {
+  --color-bg-elevated: #111115;
+  --color-text: #f1f5f9;
+  --color-text-mut: #64748b;
+}
+
+.light-mode {
+  --color-bg-elevated: #eff6ff; /* Light blue boxes */
+  --color-text: #0f172a;
+  --color-text-mut: #64748b;
+  --color-bg: #ffffff; /* White background */
+}
+
+.reports-page {
+  padding: 24px 32px;
+  animation: fadeIn 0.4s ease-out;
+  color: var(--color-text);
+  background: var(--color-bg); /* Fix for the black background issue */
+  height: 100%;
+  overflow-y: auto;
+}
+
+.reports-header {
+  margin-bottom: 24px;
+}
+
+.reports-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.reports-subtitle {
+  font-size: 14px;
+  color: var(--color-text-mut);
+}
+
+/* --- Search & Track List View --- */
+
+.reports-search-bar {
+  display: flex;
+  align-items: center;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 24px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.reports-search-bar input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--color-text);
+  font-size: 15px;
+  width: 100%;
+  margin-left: 12px;
+}
+
+.reports-search-bar input::placeholder {
+  color: var(--color-text-mut);
+}
+
+.track-list-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 20px;
+}
+
+.track-list-card {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.track-list-card:hover {
+  transform: translateY(-2px);
+  border-color: #3b82f6;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.light-mode .track-list-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.tlc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.tlc-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.tlc-zone {
+  font-size: 13px;
+  color: var(--color-text-mut);
+  margin-top: 4px;
+}
+
+.tlc-stats {
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+  border-top: 1px solid var(--color-border);
+  padding-top: 16px;
+}
+
+.tlc-stat {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--color-text-mut);
+}
+
+/* --- Detailed Report View --- */
+
+.ai-report-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.ai-header-card {
+  background: linear-gradient(135deg, rgba(30, 58, 138, 0.1), rgba(15, 23, 42, 0.8));
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 12px;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.light-mode .ai-header-card {
+  background: linear-gradient(135deg, rgba(219, 234, 254, 0.5), rgba(255, 255, 255, 0.8));
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+.ai-header-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+  animation: scanline 2s infinite linear;
+}
+
+@keyframes scanline {
+  0% { background-position: -200px 0; }
+  100% { background-position: calc(100% + 200px) 0; }
+}
+
+.ai-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  margin-bottom: 16px;
+}
+
+.light-mode .ai-badge {
+  color: #2563eb;
+  border-color: rgba(37, 99, 235, 0.3);
+}
+
+.ai-summary-text {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-text);
+  max-width: 800px;
+}
+
+.ai-summary-highlight {
+  color: #ef4444;
+  font-weight: 600;
+}
+
+.report-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+}
+
+.report-card {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.report-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-mut);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.defect-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.defect-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  border-left: 3px solid transparent;
+}
+
+.light-mode .defect-item {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.defect-item.critical { border-left-color: #ef4444; }
+.defect-item.warning { border-left-color: #f59e0b; }
+.defect-item.info { border-left-color: #3b82f6; }
+
+.defect-icon {
+  margin-top: 2px;
+}
+
+.defect-item.critical .defect-icon { color: #ef4444; }
+.defect-item.warning .defect-icon { color: #f59e0b; }
+.defect-item.info .defect-icon { color: #3b82f6; }
+
+.defect-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+
+.defect-desc {
+  font-size: 13px;
+  color: var(--color-text-mut);
+  line-height: 1.5;
+}
+
+.defect-meta {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--color-text-mut);
+}
+
+.prediction-score {
+  text-align: center;
+  padding: 32px 0;
+}
+
+.ps-value {
+  font-size: 48px;
+  font-weight: 700;
+  color: #10b981;
+  line-height: 1;
+}
+
+.ps-label {
+  font-size: 14px;
+  color: var(--color-text-mut);
+  margin-top: 8px;
+}
+
+.report-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.btn-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #3b82f6;
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.btn-download:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+}
+
+.btn-download:disabled {
+  background: var(--color-border);
+  color: var(--color-text-mut);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.download-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

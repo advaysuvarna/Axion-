@@ -69,7 +69,7 @@ const Sidebar = ({ activeNav, onNavChange, onSearch }) => {
             <Search size={15} className="search-icon" />
             <input
               type="text"
-              placeholder={activeTab === 'car' ? 'e.g. DL-401' : 'e.g. T-001'}
+              placeholder={activeTab === 'car' ? 'Search for Car ID' : 'Search for Track ID'}
               value={query}
               onChange={e => setQuery(e.target.value)}
             />

@@ -1,7 +1,8 @@
-import React, { useRef } from 'react';
+import React, { useRef, Suspense } from 'react';
 import { Thermometer, Droplets, AlertTriangle, Activity, Image as ImageIcon, Gauge, BarChart3, CheckCircle, Radio } from 'lucide-react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Environment, ContactShadows, Sparkles } from '@react-three/drei';
+import { OrbitControls, Environment, ContactShadows, Sparkles, useFBX, Center, Html } from '@react-three/drei';
+import * as THREE from 'three';
 import './SectionDetails.css';
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -13,17 +14,17 @@ const Rail = ({ x }) => (
   <group position={[x, 0, 0]}>
     {/* Web */}
     <mesh castShadow>
-      <boxGeometry args={[0.038, 0.14, 8]} />
+      <boxGeometry args={[0.038, 0.14, 40]} />
       <meshStandardMaterial color="#8b9ab0" metalness={0.95} roughness={0.07} />
     </mesh>
     {/* Head (top flange — riding surface) */}
     <mesh position={[0, 0.09, 0]} castShadow>
-      <boxGeometry args={[0.10, 0.04, 8]} />
+      <boxGeometry args={[0.10, 0.04, 40]} />
       <meshStandardMaterial color="#c0cad9" metalness={0.96} roughness={0.05} />
     </mesh>
     {/* Foot (bottom flange) */}
     <mesh position={[0, -0.09, 0]} castShadow>
-      <boxGeometry args={[0.13, 0.03, 8]} />
+      <boxGeometry args={[0.13, 0.03, 40]} />
       <meshStandardMaterial color="#8b9ab0" metalness={0.9} roughness={0.1} />
     </mesh>
   </group>
@@ -65,12 +66,12 @@ const stones = (() => {
   const arr = [];
   let seed = 137;
   const rand = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
-  for (let i = 0; i < 90; i++) {
+  for (let i = 0; i < 400; i++) {
     const side = rand() > 0.5 ? 1 : -1;
-    arr.push({ x: side * (0.62 + rand() * 0.72), y: -0.27 + rand() * 0.06, z: rand() * 8 - 4, s: 0.04 + rand() * 0.055, r: rand() });
+    arr.push({ x: side * (0.62 + rand() * 0.72), y: -0.27 + rand() * 0.06, z: rand() * 40 - 20, s: 0.04 + rand() * 0.055, r: rand() });
   }
-  for (let i = 0; i < 30; i++) {
-    arr.push({ x: (rand() - 0.5) * 0.92, y: -0.31 + rand() * 0.04, z: rand() * 8 - 4, s: 0.033 + rand() * 0.04, r: rand() });
+  for (let i = 0; i < 150; i++) {
+    arr.push({ x: (rand() - 0.5) * 0.92, y: -0.31 + rand() * 0.04, z: rand() * 40 - 20, s: 0.033 + rand() * 0.04, r: rand() });
   }
   return arr;
 })();
@@ -188,25 +189,45 @@ const DolphinCar = () => {
   );
 };
 
+const FbxModel = () => {
+  const fbx = useFBX('/axion-car.fbx');
+  const carRef = useRef();
+
+  // The FBX model has its own built-in materials, so we don't need to override them.
+
+  return (
+    <group ref={carRef} position={[0, 0.4, 0]}>
+      {/* High-intensity local lighting to make the car pop against the background */}
+      <ambientLight intensity={1.8} />
+      <directionalLight position={[5, 10, 5]} intensity={2.5} />
+      
+      <Center>
+        <primitive object={fbx} scale={0.5} rotation={[Math.PI / 2, Math.PI, Math.PI / 2]} />
+      </Center>
+      
+      {/* Rear red tail light */}
+      <pointLight position={[0, 0.2, -0.8]} intensity={1.5} distance={3} color="#ef4444" />
+    </group>
+  );
+};
+
 // ── Assembled track CAD scene ─────────────────────────────────────────────────
 const TrackModel = ({ deformities, cracks }) => {
   const groupRef = useRef();
-  useFrame(({ clock }) => {
-    if (groupRef.current) groupRef.current.rotation.y = Math.sin(clock.elapsedTime * 0.18) * 0.35;
-  });
 
-  const sleeperZ = [-3.2, -2.4, -1.6, -0.8, 0, 0.8, 1.6, 2.4, 3.2];
+  const sleeperZ = [];
+  for (let z = -20; z <= 20; z += 0.8) sleeperZ.push(z);
 
   return (
     <group ref={groupRef}>
       {/* Ground */}
       <mesh position={[0, -0.40, 0]} receiveShadow>
-        <boxGeometry args={[5.5, 0.04, 11]} />
-        <meshStandardMaterial color="#0d0d14" roughness={1} />
+        <boxGeometry args={[100, 0.04, 100]} />
+        <meshStandardMaterial color="#334155" roughness={1} />
       </mesh>
       {/* Ballast sub-bed */}
       <mesh position={[0, -0.34, 0]} receiveShadow>
-        <boxGeometry args={[2.9, 0.10, 9.2]} />
+        <boxGeometry args={[2.9, 0.10, 40]} />
         <meshStandardMaterial color="#2d3748" roughness={1} />
       </mesh>
       {/* Ballast stones */}
@@ -227,8 +248,10 @@ const TrackModel = ({ deformities, cracks }) => {
       {deformities > 0 && <AnomalyMarker position={[-0.66, 0.155, 1.0]}  color="#ef4444" />}
       {deformities > 1 && <AnomalyMarker position={[ 0.66, 0.155, -1.8]} color="#f59e0b" />}
       {cracks      > 0 && <AnomalyMarker position={[-0.66, 0.12,  -0.5]} color="#ef4444" />}
-      {/* Dolphin scanner car */}
-      <DolphinCar />
+      {/* The FBX Assembly Car */}
+      <Suspense fallback={<Html center style={{color:'white', background:'#0070f3', padding:'6px 12px', borderRadius:'6px', whiteSpace:'nowrap', fontSize:'12px', fontWeight:'bold'}}>Parsing 166MB CAD Assembly...</Html>}>
+        <FbxModel />
+      </Suspense>
     </group>
   );
 };
@@ -335,8 +358,8 @@ const SectionDetails = ({ sectionId, onBack }) => {
             <span className="sdp-live"><span className="sdp-blink" /> Live Model</span>
           </div>
           <div className="sdp-canvas">
-            <Canvas camera={{ position: [3.2, 2.2, 4.2], fov: 36 }} shadows>
-              <fog attach="fog" args={['#06060a', 4, 12]} />
+            <Canvas camera={{ position: [5.5, 3.5, 3.5], fov: 36 }} shadows>
+              <fog attach="fog" args={['#06060a', 5, 15]} />
               <ambientLight intensity={0.3} />
               <spotLight position={[6, 12, 6]}  angle={0.22} penumbra={0.8} intensity={2.2} castShadow shadowMapWidth={2048} shadowMapHeight={2048} />
               <spotLight position={[-6, 8, -4]} angle={0.35} penumbra={1.0} intensity={0.8} castShadow color="#1a4fa0" />
@@ -417,6 +440,18 @@ const SectionDetails = ({ sectionId, onBack }) => {
             <p className="sdp-profile-label">TRACK PROFILE</p>
             <p className="sdp-profile-text">{section.profile}</p>
           </div>
+        </div>
+
+        {/* Acoustic Signature Card (Fills the right-side gap) */}
+        <div className="sdp-card">
+          <div className="sdp-card-header">
+            <Radio size={14} style={{ color: '#8b5cf6' }} />
+            <p className="sdp-card-title">ACOUSTIC SIGNATURE</p>
+            <span className="sdp-status-tag good">Baseline</span>
+          </div>
+          <p className="sdp-big-value purple">42 dB</p>
+          <div className="sdp-sparkline-label"><BarChart3 size={11} /> 10-reading frequency trend</div>
+          <Sparkline data={[42, 45, 41, 44, 46, 42, 43, 40, 42, 44]} color="#8b5cf6" />
         </div>
 
         {/* Captured Images */}

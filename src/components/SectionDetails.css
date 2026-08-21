@@ -90,14 +90,14 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: rgba(255,255,255,0.4);
+  color: #ffffff;
 }
 
 .sdp-card-title {
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 1.5px;
-  color: rgba(255,255,255,0.25);
+  color: #ffffff;
   text-transform: uppercase;
   flex: 1;
 }
@@ -105,6 +105,22 @@
 /* ── CAD card ────────────────────────────────────────────────────────────── */
 .sdp-cad-card {
   grid-column: 1 / -1;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  height: 380px;
+}
+
+.sdp-cad-card .sdp-card-header {
+  position: absolute;
+  top: 16px;
+  left: 22px;
+  right: 22px;
+  z-index: 10;
+  background: rgba(6, 6, 10, 0.6);
+  padding: 6px 12px;
+  border-radius: 8px;
+  backdrop-filter: blur(4px);
 }
 
 .sdp-live {
@@ -131,17 +147,23 @@
 }
 
 .sdp-canvas {
-  height: 280px;
-  border-radius: 10px;
+  height: 100%;
+  border-radius: 14px;
   overflow: hidden;
   background: #06060a;
-  border: 1px solid rgba(255,255,255,0.05);
+  border: none;
 }
 
 .sdp-cad-hint {
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+  right: 0;
+  z-index: 10;
   font-size: 10px;
-  color: rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.4);
   text-align: center;
+  pointer-events: none;
 }
 
 /* ── Anomaly card ────────────────────────────────────────────────────────── */
@@ -255,6 +277,7 @@
 
 .sdp-big-value.orange { color: #f97316; }
 .sdp-big-value.blue   { color: #3b82f6; }
+.sdp-big-value.purple { color: #8b5cf6; }
 
 .sdp-sparkline-label {
   display: flex;

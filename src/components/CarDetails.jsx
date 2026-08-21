@@ -42,18 +42,41 @@ const statusColors = {
   Critical: { color: '#ef4444', bg: 'rgba(239,68,68,0.1)', border: 'rgba(239,68,68,0.25)' },
 };
 
-// Simple bar sparkline
-const Sparkline = ({ data, color }) => {
-  const max = Math.max(...data, 1);
+// Sparkline with axes
+const Sparkline = ({ data, color, yLabel = '', yMax, yMin = 0, xLabel }) => {
+  const max = yMax !== undefined ? yMax : Math.max(...data, 1);
+  const min = yMin;
+  
   return (
-    <div className="sparkline">
-      {data.map((v, i) => (
-        <div
-          key={i}
-          className="spark-bar"
-          style={{ height: `${(v / max) * 100}%`, background: color, opacity: 0.6 + (i / data.length) * 0.4 }}
-        />
-      ))}
+    <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: '12px' }}>
+      <div style={{ display: 'flex', width: '100%', height: '50px', gap: '6px' }}>
+        {/* Y-Axis */}
+        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', fontSize: '10px', color: 'var(--color-text-mut)', textAlign: 'right', width: '28px', paddingBottom: '2px', opacity: 0.8 }}>
+          <span>{max}{yLabel}</span>
+          <span>{min}{yLabel}</span>
+        </div>
+        
+        {/* Chart Area */}
+        <div className="sparkline" style={{ flex: 1, borderBottom: '1px solid var(--color-border)', borderLeft: '1px solid var(--color-border)' }}>
+          {data.map((v, i) => {
+            const heightPct = Math.max(0, Math.min(100, ((v - min) / (max - min || 1)) * 100));
+            return (
+              <div
+                key={i}
+                className="spark-bar"
+                style={{ height: `${heightPct}%`, background: color, opacity: 0.6 + (i / data.length) * 0.4, borderTopLeftRadius: '2px', borderTopRightRadius: '2px' }}
+                title={`${v}${yLabel}`}
+              />
+            );
+          })}
+        </div>
+      </div>
+      {/* X-Axis */}
+      {xLabel && (
+        <div style={{ textAlign: 'center', fontSize: '9px', color: 'var(--color-text-mut)', marginTop: '6px', textTransform: 'uppercase', letterSpacing: '0.5px', paddingLeft: '34px', opacity: 0.7 }}>
+          {xLabel}
+        </div>
+      )}
     </div>
   );
 };
@@ -75,6 +98,9 @@ const CarDetails = ({ carId, onBack }) => {
   const car = mockCars[carId] || { ...mockCars.DEFAULT };
   const batteryColor = car.batteryHealth >= 75 ? '#10b981' : car.batteryHealth >= 40 ? '#f59e0b' : '#ef4444';
   const s = statusColors[car.status] || statusColors.Active;
+
+  // Dynamically calculate high-voltage pack reading based on battery percentage (0% = 225V, 100% = 378V)
+  const calculatedVoltage = Math.round(225 + (car.batteryHealth / 100) * (378 - 225)) + 'V';
 
   return (
     <div className="car-details-page">
@@ -147,8 +173,8 @@ const CarDetails = ({ carId, onBack }) => {
             <div className="cdp-battery-metrics">
               <div className="cdp-bm-row">
                 <Zap size={13} style={{ color: '#f59e0b' }} />
-                <span className="cdp-bm-label">Cell Voltage</span>
-                <span className="cdp-bm-val">{car.cellVoltage}</span>
+                <span className="cdp-bm-label">Battery Voltage</span>
+                <span className="cdp-bm-val">{calculatedVoltage}</span>
               </div>
               <div className="cdp-bm-row">
                 <Thermometer size={13} style={{ color: '#ef4444' }} />
@@ -165,7 +191,7 @@ const CarDetails = ({ carId, onBack }) => {
           <div className="cdp-sparkline-label">
             <BarChart3 size={12} /> Battery trend (last 10 readings)
           </div>
-          <Sparkline data={car.batteryHistory} color={batteryColor} />
+          <Sparkline data={car.batteryHistory} color={batteryColor} yLabel="%" yMax={100} xLabel="Time (Last 10 Scans)" />
         </div>
 
         {/* Speed Card */}
@@ -179,7 +205,7 @@ const CarDetails = ({ carId, onBack }) => {
           <div className="cdp-sparkline-label">
             <BarChart3 size={12} /> Speed log (last 10 readings)
           </div>
-          <Sparkline data={car.speedHistory} color="#3b82f6" />
+          <Sparkline data={car.speedHistory} color="#3b82f6" yLabel="km/h" yMax={60} xLabel="Time (Last 10 Scans)" />
         </div>
 
         {/* System Metrics */}
@@ -187,7 +213,7 @@ const CarDetails = ({ carId, onBack }) => {
           <p className="cdp-card-title">SYSTEM METRICS</p>
           <div className="cdp-metrics-row">
             <MetricCard icon={Battery}      iconColor="#10b981" label="Battery"     value={`${car.batteryHealth}%`}    sub="Health" />
-            <MetricCard icon={Zap}          iconColor="#f59e0b" label="Voltage"     value={car.cellVoltage}            sub="Cell avg" />
+            <MetricCard icon={Zap}          iconColor="#f59e0b" label="Voltage"     value={calculatedVoltage}          sub="Pack Level" />
             <MetricCard icon={Thermometer}  iconColor="#ef4444" label="Temp"        value={car.temperature}            sub="Internal" />
             <MetricCard icon={Radio}        iconColor="#3b82f6" label="Signal"      value={car.signalStrength}         sub="4G LTE" />
           </div>
